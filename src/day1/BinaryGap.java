@@ -2,8 +2,8 @@ package day1;
 
 public class BinaryGap {
 	// Solution 1:
-	// Time Complexity: O(logN)
-	// Space Complexity: O(logN)
+	// Time Complexity: O(log2(N)) --> O(logN)
+	// Space Complexity: O(log2(N)) --> O(logN)
 	public static String binaryConversion(int n) {
 		if(n == 0) return "0";
 		
@@ -35,7 +35,7 @@ public class BinaryGap {
 	// End - Solution 1
 	
 	// Solution 2: Bit Manipulation
-	// Time Complexity: O(logN)
+	// Time Complexity: O(log2(N)) --> O(logN)
 	// Space Complexity: O(1)
 	public static int Solution2(int n) {
 		if(n == 0) return 0;
@@ -59,6 +59,27 @@ public class BinaryGap {
 	}
 	// End - Solution 2
 	
+	// Solution 3:
+	// Time Complexity: O(log2(N)) --> O(logN)
+	// Space Complexity: O(1)
+	public static int Solution3(int n) {
+		if(n == 0) return 0;
+		int indexOf1 = -1, currentIndex = 0, result = 0;
+		
+		while(n > 0) {
+			if(n % 2 != 0) {
+				if(indexOf1 != -1) {
+					result = Math.max(result, (currentIndex - indexOf1 + 1) - 2);
+				}
+				indexOf1 = currentIndex;
+			}
+			currentIndex++;
+			n /= 2;
+		}
+		return result;
+	}
+	// End - Solution 3
+	
 	public static void main(String[] args) {
 		int testCase1 = 9;
 		int testCase2 = 529;
@@ -72,10 +93,20 @@ public class BinaryGap {
 		System.out.printf("%d = %s --> has %s binary gap(s).\n", testCase4, binaryConversion(testCase4) , Solution1(testCase4));
 		System.out.printf("%d = %s --> has %s binary gap(s).\n", testCase5, binaryConversion(testCase5) , Solution1(testCase5));
 		
+		System.out.println();
+		
 		System.out.println(Solution2(testCase1));
 		System.out.println(Solution2(testCase2));
 		System.out.println(Solution2(testCase3));
 		System.out.println(Solution2(testCase4));
 		System.out.println(Solution2(testCase5));
+		
+		System.out.println();
+		
+		System.out.println(Solution3(testCase1));
+		System.out.println(Solution3(testCase2));
+		System.out.println(Solution3(testCase3));
+		System.out.println(Solution3(testCase4));
+		System.out.println(Solution3(testCase5));
 	}
 }
