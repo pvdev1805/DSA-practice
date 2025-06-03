@@ -18,9 +18,9 @@ public class FindIntervalInArray {
 		
 		int leftPtr = 0;
 		for(int rightPtr = 0; rightPtr < n; rightPtr++) {
-			freq.put(a[r], freq.getOrDefault(a[r], 0) + 1);
+			freq.put(a[rightPtr], freq.getOrDefault(a[rightPtr], 0) + 1);
 			
-			if(range.containsKey(a[r]) && freq.get(a[r]).equals(range.get(a[r]))) {
+			if(range.containsKey(a[rightPtr]) && freq.get(a[rightPtr]).equals(range.get(a[rightPtr]))) {
 				inRangeQuantity++;
 			}
 			
@@ -42,6 +42,17 @@ public class FindIntervalInArray {
 	
 	
 	public static void main(String[] args) {
+		int[] a1 = {2, 1, 4, 3, 2, 1, 1, 4};
+		int l1 = 2, r1 = 4;
 		
+		int[] a2 = {109, 1, 1, 1, 1, 1, 108};
+		int l2 = 108, r2 = 109;
+		
+		int[] a3 = {1, 3, 5, 7};
+		int l3 = 3, r3 = 5;
+		
+		System.out.println(s1(a1, l1, r1));
+		System.out.println(s1(a2, l2, r2));
+		System.out.println(s1(a3, l3, r3));
 	}
 }
