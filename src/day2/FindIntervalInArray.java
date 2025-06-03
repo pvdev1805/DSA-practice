@@ -41,7 +41,7 @@ public class FindIntervalInArray {
 					freq.remove(leftNum);
 				}
 				
-				if(leftNum >= l && leftNum <= r) {
+				if((leftNum >= l && leftNum <= r) && !freq.containsKey(leftNum)) {
 					inRangeQuantity--;
 				}
 				
