@@ -3,6 +3,13 @@ package day2;
 import java.util.HashMap;
 
 public class FindIntervalInArray {
+	
+	// Solution: Sliding Window
+	// Time Complexity: O(N)
+	// - N = a.length
+	// Space Complexity: O(m + k)
+	// - m = freq.size()
+	// - k = r - l + 1
 	public static int s1(int[] a, int l, int r) {
 		int n = a.length;
 		HashMap<Integer, Integer> range = new HashMap<>();
@@ -18,9 +25,10 @@ public class FindIntervalInArray {
 		
 		int leftPtr = 0;
 		for(int rightPtr = 0; rightPtr < n; rightPtr++) {
-			freq.put(a[rightPtr], freq.getOrDefault(a[rightPtr], 0) + 1);
+			int rightNum = a[rightPtr];
+			freq.put(rightNum, freq.getOrDefault(rightNum, 0) + 1);
 			
-			if(range.containsKey(a[rightPtr]) && freq.get(a[rightPtr]).equals(range.get(a[rightPtr]))) {
+			if(range.containsKey(rightNum) && freq.get(rightNum).equals(range.get(rightNum))) {
 				inRangeQuantity++;
 			}
 			
@@ -38,8 +46,7 @@ public class FindIntervalInArray {
 		
 		return minLength == Integer.MAX_VALUE ? -1 : minLength;
 	}
-	
-	
+	// End - Solution
 	
 	public static void main(String[] args) {
 		int[] a1 = {2, 1, 4, 3, 2, 1, 1, 4};
