@@ -60,7 +60,7 @@ public class SameSumDice {
 	
 	// Solution 2
 	// Time Complexity: O(max(M, N, 5)) --> O(N)
-	// Space Complexity: O(max(M, N, 5)) --> O(N)
+	// Space Complexity: O(1)
 	public static int Solution2(int[] a, int[] b) {
 		int n = a.length, m = b.length;
 		
