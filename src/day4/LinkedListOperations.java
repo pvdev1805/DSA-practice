@@ -10,8 +10,8 @@ public interface LinkedListOperations {
 	// Insert a new node at the end of the linked list
 	void pushBack(int value);
 	
-	// Insert a new node to the index-th position in the linked list
-	void insert(int value, int index);
+	// Insert a new node to the k-th position in the linked list
+	void insert(int value, int k);
 	
 	// Delete the node at the beginning position of the linked list
 	void popFront();
@@ -19,8 +19,8 @@ public interface LinkedListOperations {
 	// Delete the node at the ending position of the linked list
 	void popBack();
 	
-	// Delete the node at the index-th position of the linked list
-	void delete(int index);
+	// Delete the node at the k-th position of the linked list
+	void delete(int k);
 	
 	// Count the number of nodes available in the linked list
 	int countNodes();

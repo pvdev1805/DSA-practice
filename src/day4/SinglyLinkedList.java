@@ -61,16 +61,41 @@ public class SinglyLinkedList implements LinkedListOperations {
 	
 	@Override
 	public void popFront() {
-		
+		if(head == null) return;
+		head = head.next;
 	}
 	
 	@Override
 	public void popBack() {
-		
+		if(head == null) return;
+		if(head.next == null) {
+			head = null;
+			return;
+		}
+		Node currentNode = head;
+		while(currentNode.next.next != null) {
+			currentNode = currentNode.next;
+		}
+		currentNode.next = null;
 	}
 	
 	@Override
 	public void delete(int k) {
+		int quantity = countNodes();
+		if(k < 1 || k > quantity) {
+			System.out.println("Error: Deletion is INVALID at this position.");
+			return;
+		}
+		
+		if(k == 1) {
+			popFront();
+		} else {
+			Node temp = head;
+			for(int i = 1; i < k - 1; i++) {
+				temp = temp.next;
+			}
+			temp.next = temp.next.next;
+		}
 		
 	}
 	
