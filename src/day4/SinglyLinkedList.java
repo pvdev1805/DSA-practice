@@ -10,10 +10,10 @@ public class SinglyLinkedList implements LinkedListOperations {
 	public void traverse() {
 		Node currentNode = head;
 		while(currentNode.next != null) {
-			System.out.println(currentNode.data + " --> ");
+			System.out.print(currentNode.data + " --> ");
 			currentNode = currentNode.next;
 		}
-		System.out.println("null");
+		System.out.println(currentNode.data);
 	}
 	
 	@Override
@@ -38,21 +38,21 @@ public class SinglyLinkedList implements LinkedListOperations {
 	}
 	
 	@Override
-	public void insert(int value, int k) {
+	public void insert(int value, int index) {
 		int quantity = countNodes();
-		if(k < 1 || k > quantity + 1) {
+		if(index < 0 || index > quantity) {
 			System.out.println("Error: Insertion is INVALID at this position.");
 			return;
 		}
 		
-		if(k == 1) {
+		if(index == 0) {
 			pushFront(value);
 			return;
 		}
 		
 		Node newNode = new Node(value);
 		Node currentNode = head;
-		for(int i = 1; i <= k - 2; i++) {
+		for(int i = 1; i <= index - 2; i++) {
 			currentNode = currentNode.next;
 		}
 		newNode.next = currentNode.next;
@@ -80,18 +80,18 @@ public class SinglyLinkedList implements LinkedListOperations {
 	}
 	
 	@Override
-	public void delete(int k) {
+	public void delete(int index) {
 		int quantity = countNodes();
-		if(k < 1 || k > quantity) {
+		if(index < 0 || index > quantity - 1) {
 			System.out.println("Error: Deletion is INVALID at this position.");
 			return;
 		}
 		
-		if(k == 1) {
+		if(index == 0) {
 			popFront();
 		} else {
 			Node temp = head;
-			for(int i = 1; i < k - 1; i++) {
+			for(int i = 1; i < index - 1; i++) {
 				temp = temp.next;
 			}
 			temp.next = temp.next.next;
