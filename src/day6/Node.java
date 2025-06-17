@@ -9,4 +9,9 @@ public class Node {
 	Node() {
 		children = new ArrayList<Node>();
 	}
+	
+	Node(int value){
+		this.value = value;
+		this.children = new ArrayList<Node>();
+	}
 }
