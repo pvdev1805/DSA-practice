@@ -56,10 +56,10 @@ public class Main {
 		
 //		Node node10 = tree.findNode(10);
 		Node node10 = tree.findNodeBFS(10);
-		System.out.println(node10.value);
+		System.out.println( "Address: " + node10 +" - Value: " + node10.value);
 		
 //		Node node90 = tree.findNode(90);
 		Node node90 = tree.findNodeBFS(90);
-		System.out.println(node90.value);
+		System.out.println("Address: " + node90 +" - Value: " + node90.value);
 	}
 }
