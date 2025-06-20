@@ -66,5 +66,11 @@ public class Main {
 		
 		System.out.println();
 		
+		tree.postOrderTraversal(tree.root);
+		System.out.println();
+		
+		tree.postOrderTraversal(tree.findNode(3));
+		System.out.println();
+		
 	}
 }

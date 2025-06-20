@@ -13,9 +13,6 @@ public class GeneralTree implements TreeOperations {
 			if(found != null) return found;
 		}
 		
-		System.out.println("Node Address = " + node);
-		System.out.println("Node value = " + node.value);
-		System.out.println();
 		if(node.value == value) return node;
 		
 		return null;
@@ -44,13 +41,11 @@ public class GeneralTree implements TreeOperations {
 	
 	@Override
 	public Node findNode(int value) {
-		System.out.println("Round :");
 		return dfs(root, value);
 	}
 	
 	public Node findNodeBFS(int value) {
-		Node currentNode = root;
-		return bfs(currentNode, value);
+		return bfs(root, value);
 	}
 	
 	@Override
@@ -65,5 +60,14 @@ public class GeneralTree implements TreeOperations {
 		
 		Node newNode = new Node(targetValue);
 		parentNode.children.add(newNode);
+	}
+	
+	@Override
+	public void postOrderTraversal(Node node) {
+		if(node == null) return;
+		for(Node child: node.children) {
+			postOrderTraversal(child);
+		}
+		System.out.print(node.value + "  ");
 	}
 }

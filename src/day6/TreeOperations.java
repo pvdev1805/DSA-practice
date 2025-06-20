@@ -11,4 +11,7 @@ public interface TreeOperations {
 	 * @param targetValue
 	 */
 	void insert(int parentNodeValue, int targetValue);
+	
+	// Traverse through the tree and Display all nodes value in post-order
+	void postOrderTraversal(Node node);
 }
