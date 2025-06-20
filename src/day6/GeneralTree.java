@@ -8,16 +8,15 @@ public class GeneralTree implements TreeOperations {
 	private Node dfs(Node node, int value) {
 		if(node == null) return null;
 		
-		if(node.value == value) {
-			return node;
-		}
-		
-		if(node.children.isEmpty()) return null;
-		
 		for(Node child: node.children) {
-			Node result = dfs(child, value);
-			if(result != null) return result;
+			Node found = dfs(child, value);
+			if(found != null) return found;
 		}
+		
+		System.out.println("Node Address = " + node);
+		System.out.println("Node value = " + node.value);
+		System.out.println();
+		if(node.value == value) return node;
 		
 		return null;
 	}
@@ -45,8 +44,8 @@ public class GeneralTree implements TreeOperations {
 	
 	@Override
 	public Node findNode(int value) {
-		Node currentNode = root;
-		return dfs(currentNode, value);
+		System.out.println("Round :");
+		return dfs(root, value);
 	}
 	
 	public Node findNodeBFS(int value) {
@@ -57,17 +56,12 @@ public class GeneralTree implements TreeOperations {
 	@Override
 	public void insert(int parentNodeValue, int targetValue) {
 		if(root == null) {
-			Node newNode = new Node(targetValue);
-			root = newNode;
+			root = new Node(targetValue);
 			return;
 		}
 		
 		Node parentNode = findNode(parentNodeValue);
 //		Node parentNode = findNodeBFS(parentNodeValue);
-		
-		if(parentNode == null) {
-			throw new IllegalArgumentException("Error: Insertion failed !\nFailed to find a parent node having a value: " + parentNodeValue);
-		}
 		
 		Node newNode = new Node(targetValue);
 		parentNode.children.add(newNode);

@@ -3,63 +3,68 @@ package day6;
 public class Main {
 	public static void main(String[] args) {
 		GeneralTree tree = new GeneralTree();
-//		Node root = new Node();
-		
-//		root.value = 1;
-		
-//		tree.root = root;
 		tree.insert(0, 1);
 		//      1
 		
-//		Node node = new Node();
-//		node.value = 30;
-		
-//		tree.root.children.add(node);
-		tree.insert(1, 30);
+		tree.insert(1, 3);
 		//      1
 		//     /
-		//    30
+		//    3
 		
 		
-//		node = new Node();
-//		node.value = 40;
-		
-//		tree.root.children.add(node);
-		tree.insert(1, 40);
+		tree.insert(1, 4);
 		//      1
 		//     / \
-		//    30  40
+		//    3  4
 		
-//		node = new Node();
-//		node.value = 10;
-		
-//		tree.root.children.get(1).children.add(node);
-		tree.insert(40, 10);
+		tree.insert(4, 10);
 		//      1
 		//     / \
-		//    30  40
+		//    3   4
 		//         \
 		//          10
 		
-//		node = new Node();
-//		node.value = 90;
-		
-//		tree.root.children.get(1).children.get(0).children.add(node);
-		tree.insert(10, 90);
+		tree.insert(10, 17);
 		//      1
 		//     / \
-		//    30  40
+		//    3   4
 		//         \
 		//          10
 		//           \
-		//            90
+		//            17
 		
-//		Node node10 = tree.findNode(10);
-		Node node10 = tree.findNodeBFS(10);
+		tree.insert(3, 7);
+		tree.insert(3, 9);
+		//       1
+		//     /  \
+		//    3    4
+		//   / \    \
+		//  7   9    10
+		//            \
+		//             17
+		
+		tree.insert(7, 11);
+		tree.insert(7, 18);
+		//       1
+		//      /  \
+		//     3    4
+		//    / \    \
+		//   7   9    10
+		//  / \         \
+		// 11 18        17
+		
+		Node node10 = tree.findNode(10);
+//		Node node10 = tree.findNodeBFS(10);
 		System.out.println( "Address: " + node10 +" - Value: " + node10.value);
 		
-//		Node node90 = tree.findNode(90);
-		Node node90 = tree.findNodeBFS(90);
-		System.out.println("Address: " + node90 +" - Value: " + node90.value);
+		Node node17 = tree.findNode(17);
+//		Node node17 = tree.findNodeBFS(17);
+		System.out.println("Address: " + node17 +" - Value: " + node17.value);
+		
+		Node node18 = tree.findNode(18);
+		System.out.println("Address: " + node18 +" - Value: " + node18.value);
+		
+		System.out.println();
+		
 	}
 }
