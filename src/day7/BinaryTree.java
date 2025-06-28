@@ -189,4 +189,32 @@ public class BinaryTree {
 	public boolean isBalance2() {
 		return findImbalancedNodes3().isEmpty();
 	}
+	
+	// Rotations
+	public void leftRotate(Node node) {
+		Node targetNode = node.right;
+		node.right = targetNode.left;
+		targetNode.left = node;
+		node = targetNode;		
+	}
+	
+	public void rightRotate(Node node) {
+		Node targetNode = node.left;
+		node.left = targetNode.right;
+		targetNode.right = node;
+		node = targetNode;
+	}
+	
+	// Balance
+	public void leftBalance(Node node) {
+		// Case 1: Left-Left
+		
+		// Case 2: Left-Right
+	}
+	
+	public void rightBalance(Node node) {
+		// Case 1: Right-Right
+		
+		// Case 2: Right-Left
+	}
 }
