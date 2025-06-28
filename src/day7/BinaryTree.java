@@ -65,9 +65,18 @@ public class BinaryTree {
 		System.out.print(node.value + " ");
 	}
 	
+	// Assume height of node root = 0
 	public int heightOfNode(Node node) {
 		if(node == null) return -1;
 		return Math.max(heightOfNode(node.left) + 1, heightOfNode(node.right) + 1);
+	}
+	
+	// Assume height of node root = 1
+	public int heightOfNode2(Node node) {
+		if(node == null) return 0; // Want root to be 0 --> return -1;
+		int leftHeight = heightOfNode2(node.left);
+		int rightHeight = heightOfNode2(node.right);
+		return Math.max(leftHeight, rightHeight) + 1;
 	}
 	
 	public int heightOfNodeBFS(Node node) {
@@ -153,5 +162,31 @@ public class BinaryTree {
 		ArrayList<Node> res = new ArrayList<>();
 		checkAndCollect(root, res);
 		return res;
+	}
+	
+	// Additional Solutions
+	public int checkBalance2(Node node, ArrayList<Node> imbalancedNodes) {
+		if(node == null) return 0;
+		
+		int leftHeight = checkBalance2(node.left, imbalancedNodes);
+		int rightHeight = checkBalance2(node.right, imbalancedNodes);
+		
+		if(Math.abs(leftHeight - rightHeight) > 1) {
+			imbalancedNodes.add(node);
+		}
+		
+		// rebalanced
+		
+		return Math.max(leftHeight, rightHeight) + 1;
+	}
+	
+	public ArrayList<Node> findImbalancedNodes3(){
+		ArrayList<Node> res = new ArrayList<>();
+		checkBalance2(root, res);
+		return res;
+	}
+	
+	public boolean isBalance2() {
+		return findImbalancedNodes3().isEmpty();
 	}
 }
