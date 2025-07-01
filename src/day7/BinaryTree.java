@@ -191,30 +191,62 @@ public class BinaryTree {
 	}
 	
 	// Rotations
-	public void leftRotate(Node node) {
-		Node targetNode = node.right;
-		node.right = targetNode.left;
-		targetNode.left = node;
-		node = targetNode;		
-	}
-	
-	public void rightRotate(Node node) {
-		Node targetNode = node.left;
-		node.left = targetNode.right;
-		targetNode.right = node;
-		node = targetNode;
-	}
+	public Node leftRotate(Node node) {
+        Node targetNode = node.right;
+        node.right = targetNode.left;
+        targetNode.left = node;
+        return targetNode;
+    }
+
+    public Node rightRotate(Node node) {
+        Node targetNode = node.left;
+        node.left = targetNode.right;
+        targetNode.right = node;
+        return targetNode;
+    }
 	
 	// Balance
-	public void leftBalance(Node node) {
-		// Case 1: Left-Left
-		
-		// Case 2: Left-Right
-	}
-	
-	public void rightBalance(Node node) {
-		// Case 1: Right-Right
-		
-		// Case 2: Right-Left
-	}
+    public int height(Node node){
+        if(node == null) return 0;
+        return Math.max(height(node.left), height(node.right)) + 1;
+    }
+
+    public Node balance(Node node){
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+
+        if(leftHeight - rightHeight > 1){
+            // Case 1: Left-Left
+            if(height(node.left.left) >= height(node.left.right)){
+                node = rightRotate(node);
+            }
+            // Case 2: Left-Right
+            else {
+                node.left = leftRotate(node.left);
+                node = rightRotate(node);
+            }
+        } else if (rightHeight - leftHeight > 1){
+            // Case 1: Right-Right
+            if(height(node.right.right) >= height(node.right.left)){
+                node = leftRotate(node);
+            }
+            // Case 2: Right-left
+            else {
+                node.right = rightRotate(node.right);
+                node = leftRotate(node);
+            }
+        }
+        return node;
+    }
+
+    public Node checkBalanceAndBalance(Node node){
+        if(node == null) return null;
+        node.left = checkBalanceAndBalance(node.left);
+        node.right = checkBalanceAndBalance(node.right);
+        return balance(node);
+    }
+
+    public void balanceTree(){
+        root = checkBalanceAndBalance(root);
+    }
 }
