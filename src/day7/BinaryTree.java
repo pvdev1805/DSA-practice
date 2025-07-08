@@ -6,6 +6,9 @@ import java.util.LinkedList;
 public class BinaryTree {
 	Node root;
 	
+	// 1. dfs
+	// Time Complexity: O(N) -- Visits each node once in the worst case
+	// Space Complexity: O(N) -- (recursion stack, the worst case: height = N)
 	private Node dfs(Node node, int value) {
 		if(node == null) return null;
 		
@@ -20,6 +23,9 @@ public class BinaryTree {
 		return null;
 	}
 	
+	// 2. bfs
+	// Time Complexity: O(N) -- each node is enqueued/dequeued once
+	// Space Complexity: O(N) -- (queue holds up to w nodes, with w = max width of tree, in the worst case, w = N)
 	private Node bfs(Node node, int value) {
 		if(node == null) return null;
 		
@@ -38,11 +44,17 @@ public class BinaryTree {
 		return null;
 	}
 	
+	// 3. findNode
+	// Time Complexity: O(N) -- call DFS or BFS
+	// Space Complexity: O(N) -- call DFS or BFS
 	public Node findNode(int value) {
 //		 return dfs(root, value);
 		return bfs(root, value);
 	}
 	
+	// 4. insertNode
+	// Time Complexity: O(N) -- find parent Node
+	// Space Complexity: O(N) -- call DFS or BFS 
 	public void insertNode(int parentNodeValue, char position, int targetValue) {
 		if(root == null) {
 			root = new Node(targetValue);
@@ -58,6 +70,30 @@ public class BinaryTree {
 		}
 	}
 	
+	// 5. Traversal
+	// 5.1/ PreOrderTraversal
+	// Time Complexity: O(N) -- visit each node once
+	// Space Complexity: O(N) -- recursion stack
+	public void preOrderTraversal(Node node) {
+		if(node == null) return;
+		System.out.println(node.value + " ");
+		preOrderTraversal(node.left);
+		preOrderTraversal(node.right);
+	}
+	
+	// 5.2/ InOrderTraversal
+	// Time Complexity: O(N) -- visit each node once
+	// Space Complexity: O(N) -- recursion stack
+	public void inOrderTraversal(Node node){
+		if(node == null) return;
+		inOrderTraversal(node.left);
+		System.out.println(node.value + " ");
+		inOrderTraversal(node.right);
+	}
+	
+	// 5.3/ PostOrderTraversal
+	// Time Complexity: O(N) -- visit each node once
+	// Space Complexity: O(N) -- recursion stack
 	public void postOrderTraversal(Node node) {
 		if(node == null) return;
 		postOrderTraversal(node.left);
@@ -65,6 +101,26 @@ public class BinaryTree {
 		System.out.print(node.value + " ");
 	}
 	
+	// 5.4/ LevelOrderTRaversal
+	// Time Complexity: O(N)
+	// Space Complexity: O(N)
+	public void levelOrderTraversal(Node node) {
+		if(node == null) return;
+
+        LinkedList<Node> q = new LinkedList<>();
+        q.addLast(node);
+
+        while(!q.isEmpty()) {
+            Node currentNode = q.getFirst();
+            q.removeFirst();
+            System.out.print(currentNode.value + " ");
+            if(currentNode.left != null) q.addLast(currentNode.left);
+            if(currentNode.right != null) q.addLast(currentNode.right);
+        }
+	}
+	// End - Traversals
+	
+	// 
 	// Assume height of node root = 0
 	public int heightOfNode(Node node) {
 		if(node == null) return -1;
@@ -165,6 +221,9 @@ public class BinaryTree {
 	}
 	
 	// Additional Solutions
+	// checkBalance2
+	// Time Complexity: O(N)
+	// Space Complexity: O(N + k) -- k: number of imbalanced nodes
 	public int checkBalance2(Node node, ArrayList<Node> imbalancedNodes) {
 		if(node == null) return 0;
 		
@@ -180,24 +239,36 @@ public class BinaryTree {
 		return Math.max(leftHeight, rightHeight) + 1;
 	}
 	
+	// findImbalancedNodes3
+	// Time Complexity: O(N)
+	// Space Complexity: O(N + k)
 	public ArrayList<Node> findImbalancedNodes3(){
 		ArrayList<Node> res = new ArrayList<>();
 		checkBalance2(root, res);
 		return res;
 	}
 	
+	// isBalance2
+	// Time Complexity: O(N)
+	// Space Complexity: O(N + k)
 	public boolean isBalance2() {
 		return findImbalancedNodes3().isEmpty();
 	}
 	
 	// Rotations
+	// 1/ leftRotate
+	// Time Complexity: O(1)
+	// Space Complexity: O(1)
 	public Node leftRotate(Node node) {
         Node targetNode = node.right;
         node.right = targetNode.left;
         targetNode.left = node;
         return targetNode;
     }
-
+	
+	// 2/ rightRotate
+	// Time Complexity: O(1)
+	// Space Complexity: O(1)
     public Node rightRotate(Node node) {
         Node targetNode = node.left;
         node.left = targetNode.right;
@@ -206,11 +277,17 @@ public class BinaryTree {
     }
 	
 	// Balance
+    // 1/ height
+    // Time Complexity: O(N)
+ 	// Space Complexity: O(h) --> the worst case: O(N)
     public int height(Node node){
         if(node == null) return 0;
         return Math.max(height(node.left), height(node.right)) + 1;
     }
-
+    
+    // 2/ balance
+    // Time Complexity: O(4*N) --> O(N)
+  	// Space Complexity: O(h) --> the worst case: O(N)
     public Node balance(Node node){
         int leftHeight = height(node.left);
         int rightHeight = height(node.right);
@@ -238,14 +315,20 @@ public class BinaryTree {
         }
         return node;
     }
-
+    
+    // 3/ checkBalanceAndBalance
+    // Time Complexity: O(N^2) (calls balance at each node, which calls height O(n) times)
+    // Space Complexity: O(h) --> the worst case: O(N)
     public Node checkBalanceAndBalance(Node node){
         if(node == null) return null;
         node.left = checkBalanceAndBalance(node.left);
         node.right = checkBalanceAndBalance(node.right);
         return balance(node);
     }
-
+    
+    // 4/ balanceTree
+    // Time Complexity: O(N^2) (calls checkBalanceAndBalance on root)
+    // Space Complexity: O(h) --> the worst case: O(N)
     public void balanceTree(){
         root = checkBalanceAndBalance(root);
     }

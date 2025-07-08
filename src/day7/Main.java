@@ -149,5 +149,20 @@ public class Main {
         // 1   3 7  10
 
         System.out.println();
+        
+        
+        BinaryTree tree7 = new BinaryTree();
+        tree7.insertNode(0, 'L', 5);
+        tree7.insertNode(5, 'L', 4);
+        tree7.insertNode(4, 'L', 3);
+        tree7.insertNode(3, 'L', 2);
+        tree7.insertNode(2, 'L', 1);
+        tree7.postOrderTraversal(tree7.root);
+        
+        System.out.println();
+        tree7.balanceTree();
+        tree7.postOrderTraversal(tree7.root);
+        
+        System.out.println();
 	}
 }
