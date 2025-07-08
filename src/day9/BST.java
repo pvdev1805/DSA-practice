@@ -39,9 +39,8 @@ public class BST {
         return alternativeNode;
     }
 
-    // Inserts a value into the BST and balances it if necessary
+ // Inserts a value into the BST and balances it if necessary
     // 1/ Time Complexity: O(logN) on average, O(N) in the worst case (unbalanced tree)
-    // But since height() is called at each node along the path, the total worst case is O(N^2)
     // 2/ Space Complexity: O(h) where h is the height of the tree (due to recursion stack), O(N) in the worst case
     private Node insertToNode(Node node, int value){
         if(node == null){
@@ -49,45 +48,60 @@ public class BST {
         }
         if(value < node.value){
             node.left = insertToNode(node.left, value);
-        } else if(value > node.value){
+        } else if(value > node.value) {
             node.right = insertToNode(node.right, value);
         }
 
-        // balance the tree if necessary
+        return node;
+    }
+
+    // Balance
+    // 1/ Time Complexity: O(N) where n is the number of nodes in the tree, the worst case is O(N^2) when called on each node
+    // 2/ Space Complexity: O(h) where h is the height of the tree (due to recursion stack), O(N) in the worst case
+    private Node balance(Node node){
+        if(node == null) return null;
+        node.left = balance(node.left);
+        node.right = balance(node.right);
+
         int leftHeight = height(node.left);
         int rightHeight = height(node.right);
+
         if(leftHeight - rightHeight > 1){
             // case: Left-Left
-            if(value < node.left.value){
+            if(height(node.left.left) >= height(node.left.right)){
                 node = rotateRight(node);
-            }
-            // case: Left-Right
-            else {
+            } else {
+                // case: Left-Right
                 node.left = rotateLeft(node.left);
                 node = rotateRight(node);
             }
         } else if(rightHeight - leftHeight > 1){
             // case: Right-Right
-            if(value > node.right.value){
+            if(height(node.right.right) >= height(node.right.left)){
                 node = rotateLeft(node);
-            }
-            // case: Right-Left
-            else {
+            } else {
+                // case: Right-Left
                 node.right = rotateRight(node.right);
                 node = rotateLeft(node);
             }
         }
-
         return node;
     }
-    
-    public Node insert(int value){
-        return insertToNode(root, value);
+
+    // Inserts a value into the BST and balances it
+    // 1/ Time Complexity: O(logN) on average, O(N) in the worst case (unbalanced tree)
+    // 2/ Space Complexity: O(h) where h is the height of the tree (due to recursion stack), O(N) in the worst case
+    public void insert(int value){
+        root = insertToNode(root, value);
+        root = balance(root);
     }
 
+    // Builds a balanced BST from an array of values
+    // 1/ Time Complexity: O(NlogN) where n is the number of values in the array, the worst case is O(N^2) when inserting each value
+    // 2/ Space Complexity: O(N) for the BST nodes created
     public void buildBST(int[] values){
         for(int value : values){
-            root = insert(value);
+            insert(value);
         }
     }
     
