@@ -5,17 +5,17 @@ import java.util.Arrays;
 public class SixDigits {
 	public static void main(String[] args) {
 		System.out.println(solution(1, 2, 3, 4, 5, 6)); // Expected: "12:34:56"
-        System.out.println(solution(0, 0, 0, 0, 0, 0)); // Expected: "00:00:00"
-        System.out.println(solution(2, 3, 4, 5, 6, 7)); // Expected: "23:46:57"
-        System.out.println(solution(1, 1, 1, 1, 1, 1)); // Expected: "11:11:11"
-        System.out.println(solution(1, 8, 3, 2, 6, 4)); // Expected: "12:36:48"
-        System.out.println(solution(0, 0, 0, 7, 8, 9)); // Expected: "07:08:09"
-        System.out.println(solution(2, 4, 5, 9, 5, 9)); // Expected: "NOT POSSIBLE"
+		System.out.println(solution(0, 0, 0, 0, 0, 0)); // Expected: "00:00:00"
+		System.out.println(solution(2, 3, 4, 5, 6, 7)); // Expected: "23:46:57"
+		System.out.println(solution(1, 1, 1, 1, 1, 1)); // Expected: "11:11:11"
+		System.out.println(solution(1, 8, 3, 2, 6, 4)); // Expected: "12:36:48"
+		System.out.println(solution(0, 0, 0, 7, 8, 9)); // Expected: "07:08:09"
+		System.out.println(solution(2, 4, 5, 9, 5, 9)); // Expected: "NOT POSSIBLE"
 	}
 	
 	// Time Complexity: O(6^4) = O(1296) due to nested loops for each digit
-    // but O(6!) = O(720) for permutations is more significant
-    // Space Complexity: O(6) for the digits array + O(6) for the isUsed array + O(2) for remainingDigits array + O(2) for secondCases array
+	// but O(6!) = O(720) for all permutations is more significant
+	// Space Complexity: O(6) for the digits array + O(6) for the isUsed array + O(2) for remainingDigits array + O(2) for secondCases array
 	public static String solution(int A, int B, int C, int D, int E, int F){
         int[] digits = {A, B, C, D, E, F};
         Arrays.sort(digits);
@@ -69,6 +69,8 @@ public class SixDigits {
                         isUsed[l] = false;
                     }
                 }
+                isUsed[i] = false;
+                isUsed[j] = false;
             }
         }
 
