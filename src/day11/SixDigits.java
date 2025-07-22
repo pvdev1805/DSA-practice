@@ -13,67 +13,60 @@ public class SixDigits {
 		System.out.println(solution(2, 4, 5, 9, 5, 9)); // Expected: "NOT POSSIBLE"
 	}
 	
-	// Time Complexity: O(6^4) = O(1296) due to nested loops for each digit
-	// but O(6!) = O(720) for all permutations is more significant
-	// Space Complexity: O(6) for the digits array + O(6) for the isUsed array + O(2) for remainingDigits array + O(2) for secondCases array
-	public static String solution(int A, int B, int C, int D, int E, int F){
-        int[] digits = {A, B, C, D, E, F};
-        Arrays.sort(digits);
-        String earliestTime = null;
+	// Time Complexity: O(6 * 10) = O(60) for counting sort (the worst case: A, B, C, D, E, F are all digit 9) and O(6) for the final check
+    // Space Complexity: O(10) for the countDigits array and O(6) for the digits array
+    public static String solution(int A, int B, int C, int D, int E, int F){
+        int[] countDigits = new int[10];
+        countDigits[A]++;
+        countDigits[B]++;
+        countDigits[C]++;
+        countDigits[D]++;
+        countDigits[E]++;
+        countDigits[F]++;
 
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 6; j++){
-                if(j == i) continue;
-                int h1 = digits[i];
-                int h2 = digits[j];
-                int hour = h1 * 10 + h2;
-                if(hour >= 24) continue;
-
-                boolean[] isUsed = new boolean[6];
-                isUsed[i] = true;
-                isUsed[j] = true;
-
-                for(int k = 0; k < 6; k++){
-                    if(isUsed[k]) continue;
-                    for(int l = 0; l < 6; l++){
-                        if(isUsed[l] || l == k) continue;
-                        int m1 = digits[k];
-                        int m2 = digits[l];
-                        int minute = m1 * 10 + m2;
-                        if(minute >= 60) continue;
-
-                        isUsed[k] = true;
-                        isUsed[l] = true;
-
-                        int[] remainingDigits = new int[2];
-                        int index = 0;
-                        for(int m = 0; m < 6; m++){
-                            if(!isUsed[m]){
-                                remainingDigits[index] = digits[m];
-                                index++;
-                            }
-                        }
-                        int s1 = remainingDigits[0];
-                        int s2 = remainingDigits[1];
-                        int[] secondCases = {s1 * 10 + s2, s2 * 10 + s1};
-                        for(int second : secondCases){
-                            if(second < 60){
-                                String time = String.format("%02d:%02d:%02d", hour, minute, second);
-                                if(earliestTime == null || time.compareTo(earliestTime) < 0){
-                                    earliestTime = time;
-                                }
-                            }
-                        }
-
-                        isUsed[k] = false;
-                        isUsed[l] = false;
-                    }
-                }
-                isUsed[i] = false;
-                isUsed[j] = false;
+        int[] digits = new int[6];
+        int index = 0;
+        // Counting Sort the digits
+        for(int i = 0; i < 10; i++){
+            while(countDigits[i] > 0){
+                digits[index] = i;
+                index++;
+                countDigits[i]--;
             }
         }
 
-        return earliestTime != null ? earliestTime : "NOT POSSIBLE";
+        for(int i = digits.length - 1; i >= 0; i -= 2){
+            int limit = i / 2 > 0 ? 59 : 23; // 59 for seconds and minutes, 23 for hours
+
+            int value = digits[i-1] * 10 + digits[i];
+            if(value <= limit){
+                continue;
+            }
+
+            // The smaller digit must be on the left side
+            if(digits[i-1] > digits[i]){
+                swap(digits, i-1, i);
+            }
+            boolean isValid = false;
+            for(int j = i - 2; j >= 0; j--){
+                if(digits[j] * 10 + digits[i] <= limit){
+                    swap(digits, j, i - 1);
+                    isValid = true;
+                    break;
+                }
+            }
+            if(!isValid){
+                return "NOT POSSIBLE";
+            }
+        }
+        return String.format("%02d:%02d:%02d", digits[0] * 10 + digits[1], digits[2] * 10 + digits[3], digits[4] * 10 + digits[5]);
+    }
+    
+    // Time Complexity: O(1) for swapping two elements in the array
+    // Space Complexity: O(1) for the temporary variable
+    public static void swap(int[] digits, int i, int j) {
+        int temp = digits[i];
+        digits[i] = digits[j];
+        digits[j] = temp;
     }
 }
